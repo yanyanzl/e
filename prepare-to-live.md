@@ -6,12 +6,20 @@ sudo timedatectl set-ntp on
 ## links to be used
   - https://holesky.ethpandaops.io/
   - https://github.com/eth-clients/holesky
-
+  - https://holesky-faucet.pk910.de/
 
 ## create a metamask wallet and connect to holesky network
-0xE05F2B8aa7f17E04D486a2Cf0A6ae66c7788fFc0
+  - connect to holesky network in metamask (mobile app only).
+  - or go to https://holesky.ethpandaops.io/ and connect with your metamask on this website.
+  - then switch to holesky network in your metamask wallet. you can see your holesky ETH address now like below:
+    - 0xE05F2B8aa7f17E04D486a2Cf0A6ae66c7788fFc0
 
-0xE05F2B8aa7f17E04D486a2Cf0A6ae66c7788fFc0
+  - 0xE05F2B8aa7f17E04D486a2Cf0A6ae66c7788fFc0
+
+## get holesky testnetwork tokens ETH
+  - visit faucet address https://holesky-faucet.pk910.de/
+  - fill the ETH1 address above and start mining.
+  - use the boost button to boost (you must). connect a few account. you can get your ETH very fast then.
 
 ## Staking withdrawals
 

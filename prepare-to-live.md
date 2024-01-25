@@ -33,6 +33,11 @@ sudo timedatectl set-ntp on
         
       - Wagyu Key Gen GUI: This software is being updated to require users to provide a withdrawal address during key generation. In the meantime, you may have to check “Advanced” during setup to enter a withdrawal address. By providing this flag, your withdrawal credentials will contain the 0x01 prefix and your withdrawal address, signaling that your account is ready for withdrawals.  
 
+### Set fee recipient
+  - Stakers must provide a fee recipient address to their consensus client in order to receive transaction fee rewards. This is a normal Ethereum address that you're used to.
+  - The fee recipient is an Ethereum address nominated by a beacon chain validator to receive tips from user transactions. Given that all mainnet and testnets have gone through The Merge, if you run validators on a network, you are strongly recommended to nominate a fee recipient for your validators. Failing to nominate a fee recipient will result in losing the tips from transactions.
+  - add parameter "--suggested-fee-recipient 0xE05F2B8aa7f17E04D486a2Cf0A6ae66c7788fFc0" to the end of lighthouse command.
+
 ### Eth1 Address for the New Withdrawal Credentials
   - This is the Eth1 address that will be the new withdrawal credentials. This must be an address that is WITHIN YOUR CONTROL. It is where all the ETH staking rewards will be sent. It is also the address where the staked ETH deposit is sent if you exit your validator.
 

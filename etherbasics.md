@@ -6,6 +6,14 @@
     - The Beacon Chain introduced the consensus logic and block gossip protocol which now secures Ethereum.
     - The Beacon Chain is the foundational component of Ethereum 2.0, responsible for implementing the proof-of-stake (PoS) consensus mechanism, coordinating validators, and paving the way for increased scalability and efficiency in the Ethereum blockchain.
 
+### The Merge
+    - The Merge was an Ethereum upgrade that merged the Beacon Chain into Ethereum Mainnet, turning Mainnet into a combination of an execution layer and consensus layer. The Merge transitioned Mainnet from proof of work to proof of stake consensus.
+    - Execution and consensus clients
+    - After The Merge, a full Ethereum Mainnet node is a combination of an execution client (previously called an Ethereum 1.0 client) and a consensus client (previously called an Ethereum 2.0 client).
+    - Execution and consensus clients communicate with each other using the Engine API.
+    - ![image](https://github.com/yanyanzl/e/assets/152104603/0d3936a6-01f6-4a28-8dac-618906203f03)
+
+
 
 ### Genesis file
     - The genesis file defines the first block in the chain, and the first block defines which chain you want to join.

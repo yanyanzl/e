@@ -29,7 +29,7 @@ sudo timedatectl set-ntp on
     - If you’re preparing to make a deposit to activate a new validator, you can (and should) provide a withdrawal address with your initial deposit. This is done at time of key generation, and is then included in your deposit data json file deposit_data-<timestamp>.json which is submitted with your 32 ETH deposit transaction.Depending which method you use to generate your keys:
 
       - Staking Deposit CLI: This is done by using the “eth1 withdrawal address” (--eth1_withdrawal_address) flag when generating your keys with the Staking Deposit CLI.
-          - ./deposit.sh new-mnemonic --num_validators=1 --mnemonic_language=english --chain=holesky --eth1_withdrawal_address
+          - ./deposit.sh new-mnemonic --num_validators=1 --mnemonic_language=english --chain=holesky --eth1_withdrawal_address=0xE05F2B8aa7f17E04D486a2Cf0A6ae66c7788fFc0
         
       - Wagyu Key Gen GUI: This software is being updated to require users to provide a withdrawal address during key generation. In the meantime, you may have to check “Advanced” during setup to enter a withdrawal address. By providing this flag, your withdrawal credentials will contain the 0x01 prefix and your withdrawal address, signaling that your account is ready for withdrawals.  
 
@@ -56,6 +56,21 @@ sudo timedatectl set-ntp on
       3. Import validator keys into Lighthouse
       4. Start Lighthouse validator client
       5. Submit deposit
+  - step 1: see above 3.1 : - ./deposit.sh new-mnemonic --num_validators=1 --mnemonic_language=english --chain=holesky --eth1_withdrawal_address=0xE05F2B8aa7f17E04D486a2Cf0A6ae66c7788fFc0
+      - Upon completing this step, the files deposit_data-*.json and keystore-m_*.json will be created. The keys that are generated from staking-deposit-cli can be easily loaded into a Lighthouse validator client (lighthouse vc) in Step 3. In fact, both of these programs are designed to work with each other.
+  - step 2. Start an execution client and Lighthouse beacon node. Start an execution client and Lighthouse beacon node according to the Run a Node guide. Make sure that both execution client and consensus client are synced.
+  - Step 3. Import validator keys to Lighthouse.
+      1. In Step 1, the staking-deposit-cli will generate the validator keys into a validator_keys directory. Let's assume that this directory is $HOME/staking-deposit-cli/validator_keys. Using the default validators directory in Lighthouse (~/.lighthouse/mainnet/validators), run the following command to import validator keys:   lighthouse --network goerli account validator import --directory $HOME/staking-deposit-cli/validator_keys
+      2. Once you see the above message, you have successfully imported the validator keys. You can now proceed to the next step to start the validator client.
+  - step 4. Start Lighthouse validator client: After the keys are imported, the user can start performing their validator duties by starting the Lighthouse validator client lighthouse vc 
+      1. lighthouse vc --network holesky --suggested-fee-recipient 0xE05F2B8aa7f17E04D486a2Cf0A6ae66c7788fFc0
+      2. The validator client manages validators using data obtained from the beacon node via a HTTP API. You are highly recommended to enter a fee-recipient by changing YourFeeRecipientAddress to an Ethereum address under your control.
+      3. When lighthouse vc starts, check that the validator public key appears as a voting_pubkey as shown below:
+          - INFO Enabled validator       voting_pubkey: 0xa5e8702533f6d66422e042a0bf3471ab9b302ce115633fa6fdc5643f804b6b4f1c33baf95f125ec21969a3b1e0dd9e56
+      4. Once this log appears (and there are no errors) the lighthouse vc application will ensure that the validator starts performing its duties and being rewarded by the protocol.
+  - Step 5: Submit deposit (32ETH per validator)
+
+
 
 
 ### Eth1 Address for the New Withdrawal Credentials

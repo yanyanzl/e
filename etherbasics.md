@@ -13,6 +13,12 @@
     - Execution and consensus clients communicate with each other using the Engine API.
     - ![image](https://besu.hyperledger.org/assets/images/Execution-Consensus-Clients-fb025b4b0cea4f3e3efef43657540e27.png)
 
+    
+### Execution clients
+    - Execution clients, such as Besu, manage the execution layer, including executing transactions and updating the world state. Execution clients serve JSON-RPC API requests and communicate with each other in a peer-to-peer network.
+
+### Consensus clients
+    - Consensus clients, such as Teku, contain beacon node and validator client implementations. The beacon node is the primary link to the Beacon Chain (consensus layer). The validator client performs validator duties on the consensus layer. Consensus clients serve REST API requests and communicate with each other in a peer-to-peer network.
 
 
 ### Genesis file

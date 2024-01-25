@@ -50,7 +50,13 @@ sudo timedatectl set-ntp on
 
 ### Become a validator
   - Becoming an Ethereum consensus validator is rewarding, but it's not for the faint of heart. You'll need to be familiar with the rules of staking (e.g., rewards, penalties, etc.) and also configuring and managing servers. You'll also need at least 32 ETH!
-  - 
+  - There are five primary steps to become a validator:
+      1. create validator keys
+      2. Start an execution client and Lighthouse beacon node
+      3. Import validator keys into Lighthouse
+      4. Start Lighthouse validator client
+      5. Submit deposit
+
 
 ### Eth1 Address for the New Withdrawal Credentials
   - This is the Eth1 address that will be the new withdrawal credentials. This must be an address that is WITHIN YOUR CONTROL. It is where all the ETH staking rewards will be sent. It is also the address where the staked ETH deposit is sent if you exit your validator.

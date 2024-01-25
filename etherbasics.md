@@ -6,6 +6,12 @@
     - The Beacon Chain introduced the consensus logic and block gossip protocol which now secures Ethereum.
     - The Beacon Chain is the foundational component of Ethereum 2.0, responsible for implementing the proof-of-stake (PoS) consensus mechanism, coordinating validators, and paving the way for increased scalability and efficiency in the Ethereum blockchain.
 
+
+### Genesis file
+    - The genesis file defines the first block in the chain, and the first block defines which chain you want to join.
+    - For Ethereum Mainnet and public testnets (for example, Goerli) the genesis configuration definition is in Besu and used when specifying a public network using the --network command line option.
+    - For private networks, create a JSON genesis file, then specify the genesis file using the --genesis-file command line option.
+
 ## Mechanics of withdrawals: How they work
     - Withdrawals as an operation, not a new transaction type
     - Ethereum users are used to transactions being executed in a manual way—if you want to transfer funds, you have to sign a transaction and pay the gas.

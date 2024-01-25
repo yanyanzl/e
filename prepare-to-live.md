@@ -38,7 +38,19 @@ sudo timedatectl set-ntp on
   - The fee recipient is an Ethereum address nominated by a beacon chain validator to receive tips from user transactions. Given that all mainnet and testnets have gone through The Merge, if you run validators on a network, you are strongly recommended to nominate a fee recipient for your validators. Failing to nominate a fee recipient will result in losing the tips from transactions.
   - add parameter "--suggested-fee-recipient 0xE05F2B8aa7f17E04D486a2Cf0A6ae66c7788fFc0" to the end of lighthouse command.
 
+### Consensus Layer Beacon Node (BN)
+  - verify it with the following command to check if it returns the client version correctly:
+  - curl -H "Content-Type: application/json" -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}' http://localhost:8545
+  - Make sure that your node has more than 20 peers.
+  - Once forwards sync completes, Lighthouse will commence a "backfill sync" to download the blocks from the checkpoint back to genesis.
+      - INFO Downloading historical blocks  est_time: 5 hrs 0 mins, speed: 111.96 slots/sec, distance: 2020451 slots (40 weeks 0 days), service: slot_notifier
+  - Logs - Syncing : You should see that Lighthouse remains in sync and marks blocks as verified indicating that they have been processed successfully by the execution engine:
+      - INFO Synced, slot: 3690668, block: 0x1244…cb92, epoch: 115333, finalized_epoch: 115331, finalized_root: 0x0764…2a3d, exec_hash: 0x929c…1ff6 (verified), peers: 78
+      - Once you see the above message - congratulations! This means that your node is synced and you have contributed to the decentralization and security of the Ethereum network. 
 
+### Become a validator
+  - Becoming an Ethereum consensus validator is rewarding, but it's not for the faint of heart. You'll need to be familiar with the rules of staking (e.g., rewards, penalties, etc.) and also configuring and managing servers. You'll also need at least 32 ETH!
+  - 
 
 ### Eth1 Address for the New Withdrawal Credentials
   - This is the Eth1 address that will be the new withdrawal credentials. This must be an address that is WITHIN YOUR CONTROL. It is where all the ETH staking rewards will be sent. It is also the address where the staked ETH deposit is sent if you exit your validator.

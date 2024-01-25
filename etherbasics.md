@@ -11,7 +11,7 @@
     - Execution and consensus clients
     - After The Merge, a full Ethereum Mainnet node is a combination of an execution client (previously called an Ethereum 1.0 client) and a consensus client (previously called an Ethereum 2.0 client).
     - Execution and consensus clients communicate with each other using the Engine API.
-    - ![image](https://github.com/yanyanzl/e/assets/152104603/0d3936a6-01f6-4a28-8dac-618906203f03)
+    - ![image](https://besu.hyperledger.org/assets/images/Execution-Consensus-Clients-fb025b4b0cea4f3e3efef43657540e27.png)
 
 
 

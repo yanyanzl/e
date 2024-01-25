@@ -69,6 +69,18 @@ sudo timedatectl set-ntp on
           - INFO Enabled validator       voting_pubkey: 0xa5e8702533f6d66422e042a0bf3471ab9b302ce115633fa6fdc5643f804b6b4f1c33baf95f125ec21969a3b1e0dd9e56
       4. Once this log appears (and there are no errors) the lighthouse vc application will ensure that the validator starts performing its duties and being rewarded by the protocol.
   - Step 5: Submit deposit (32ETH per validator)
+      1. After you have successfully run and synced the execution client, beacon node and validator client, you can now proceed to submit the deposit. Go to the mainnet Staking launchpad (or Goerli staking launchpad for testnet validator) and carefully go through the steps to becoming a validator. Once you are ready, you can submit the deposit by sending 32ETH per validator to the deposit contract. Upload the deposit_data-*.json file generated in Step 1 to the Staking launchpad.
+      2.  Important note: Double check that the deposit contract for mainnet is 0x00000000219ab540356cBB839Cbe05303d7705Fa before you confirm the transaction.
+      3.  Once the deposit transaction is confirmed, it will take a minimum of ~16 hours to a few days/weeks for the beacon chain to process and activate your validator, depending on the queue.
+      4.  Once your validator is activated, the validator client will start to publish attestations each epoch:
+          - Dec 03 08:49:40.053 INFO Successfully published attestation      slot: 98, committee_index: 0, head_block: 0xa208…7fd5,
+      5.  If you propose a block, the log will look like: Dec 03 08:49:36.225 INFO Successfully published block            slot: 98, attestations: 2, deposits: 0, service: block
+      6.  Congratulations! Your validator is now performing its duties and you will receive rewards for securing the Ethereum network.
+
+### maintenance 
+  - After the validator is running and performing its duties, it is important to keep the validator online to continue accumulating rewards. However, there could be problems with the computer, the internet or other factors that cause the validator to be offline. For this, it is best to subscribe to notifications, e.g., via beaconcha.in which will send notifications about missed attestations and/or proposals. You will be notified about the validator's offline status and will be able to react promptly.
+  - The next important thing is to stay up to date with updates to Lighthouse and the execution client. Updates are released from time to time, typically once or twice a month. For Lighthouse updates, you can subscribe to notifications on Github by clicking on Watch. If you only want to receive notification on new releases, select Custom, then Releases. You could also join Lighthouse Discord where we will make an announcement when there is a new release.
+  - You may also want to try out Siren, a UI developed by Lighthouse to monitor validator performance.
 
 
 

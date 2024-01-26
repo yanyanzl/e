@@ -28,4 +28,11 @@
          - sudo systemctl enable prometheus.service
          - sudo systemctl enable prometheus-node-exporter.service
       5. change the yml configuration files as needed. see prometheus.yml in this branch
-      6. 
+      6. restart services:
+          - sudo systemctl restart grafana-server.service
+          - sudo systemctl restart prometheus.service
+          - sudo systemctl restart prometheus-node-exporter.service       
+      8. verify the service is running:
+        - sudo systemctl status grafana-server.service prometheus.service prometheus-node-exporter.service
+      9. setting up grafana on http://localhost:3000
+      10. 

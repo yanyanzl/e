@@ -28,7 +28,7 @@
         exit
     
   - Setting up Prometheus
-      - add parameters to geth --metrics --metrics.influxdb --metrics.influxdb.endpoint "http://0.0.0.0:8086" --metrics.influxdb.username "geth" --metrics.influxdb.password "chosenpassword"
+      - add parameters to geth --metrics --metrics.addr 127.0.0.1 --metrics.influxdb --metrics.influxdb.endpoint "http://0.0.0.0:8086" --metrics.influxdb.username "geth" --metrics.influxdb.password "chosenpassword"
       - in terminal: use command to check it is working
       - influx
       - use geth
@@ -36,6 +36,14 @@
 
   - setting up grafana
       - When Grafana is up and running, it should be reachable at localhost:3000
+      - The browser first redirects to the Grafana home page to set up the source data. Click on the "Data sources" icon and then click on "InfluxDB".
+      - fill the following fields:
+            URL: http://localhost:8086
+            InfluxDB Details
+            Database: geth
+            User: <your-user-name>
+            Password: <your-password>
+      - Grafana is now set up to read data from InfluxDB. Now a dashboard can be created to interpret and display it. Dashboards properties are encoded in JSON files which can be created by anybody and easily imported. On the left bar, click on the "Dashboards" icon, then "Import".
 
 
 ### Metrics monitoring

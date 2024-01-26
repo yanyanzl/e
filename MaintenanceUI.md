@@ -13,15 +13,30 @@
   - An easy way to try out queries is the GraphiQL interface shipped with Geth. To open it visit http://localhost:8545/graphql/ui
 
 ### Geth Monitoring with InfluxDB and Grafana
-  - installation:
-    curl -tlsv1.3 --proto =https -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add
-    source /etc/lsb-release
-    echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
-    sudo apt update
-    sudo apt install influxdb -y
-    sudo systemctl enable influxdb
-    sudo systemctl start influxdb
-    sudo apt install influxdb-client
+  - installation of InfluxDB:
+        curl -tlsv1.3 --proto =https -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add
+        source /etc/lsb-release
+        echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+        sudo apt update
+        sudo apt install influxdb -y
+        sudo systemctl enable influxdb
+        sudo systemctl start influxdb
+        sudo apt install influxdb-client
+        influx
+        create database geth
+        create user geth with password choosepassword
+        exit
+    
+  - Setting up Prometheus
+      - add parameters to geth --metrics --metrics.influxdb --metrics.influxdb.endpoint "http://0.0.0.0:8086" --metrics.influxdb.username "geth" --metrics.influxdb.password "chosenpassword"
+      - in terminal: use command to check it is working
+      - influx
+      - use geth
+      - show measurements
+
+  - setting up grafana
+      - When Grafana is up and running, it should be reachable at localhost:3000
+
 
 ### Metrics monitoring
   - Metrics, monitoring, and alerting are the key elements of a monitoring system. Metrics are the input, the raw data needed for monitoring performance, health, and availability. Monitoring is what alerting is built on top of. Together, they provide insight into how your applications and infrastructure are performing. They detect performance or usage anomalies, help you troubleshoot and identify issues, reveal usage and behavior patterns or trends, and help you understand the impact of any changes you make to your applications or infrastructure. Whenever metrics meet conditions you have defined as part of alert rules, monitoring solutions send notifications prompting you to investigate issues and even help you narrow down and identify possible root causes.

@@ -68,6 +68,10 @@ sudo timedatectl set-ntp on
       3. When lighthouse vc starts, check that the validator public key appears as a voting_pubkey as shown below:
           - INFO Enabled validator       voting_pubkey: 0xa5e8702533f6d66422e042a0bf3471ab9b302ce115633fa6fdc5643f804b6b4f1c33baf95f125ec21969a3b1e0dd9e56
       4. Once this log appears (and there are no errors) the lighthouse vc application will ensure that the validator starts performing its duties and being rewarded by the protocol.
+      5. make sure execution synced by:
+          - geth attach http://127.0.0.1:8545
+          - eth.syncing (if it return "false"). the sync finished
+
   - Step 5: Submit deposit (32ETH per validator)
       1. After you have successfully run and synced the execution client, beacon node and validator client, you can now proceed to submit the deposit. Go to the mainnet Staking launchpad (or Goerli staking launchpad for testnet validator) and carefully go through the steps to becoming a validator. Once you are ready, you can submit the deposit by sending 32ETH per validator to the deposit contract. Upload the deposit_data-*.json file generated in Step 1 to the Staking launchpad.
       2.  Important note: Double check that the deposit contract for mainnet is 0x00000000219ab540356cBB839Cbe05303d7705Fa before you confirm the transaction.

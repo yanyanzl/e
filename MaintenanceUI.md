@@ -1,5 +1,9 @@
 # Maintenance and UI
 
+### APIs opened on the nodes:
+  - A Lighthouse beacon node can be configured to expose an HTTP server by supplying the --http flag. The default listen address is http://127.0.0.1:5052
+  - A Lighthouse validator client can be configured to expose a HTTP server by supplying the --http flag. The default listen address is http://127.0.0.1:5062
+
 ### automatic start up or resume
   - Warning: it will take around 20 minutes for validator to be activated after it is been stopped and then restarted
   - chmod +x $HOME/ethnode/startExecuteNode.sh

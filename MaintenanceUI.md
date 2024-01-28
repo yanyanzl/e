@@ -1,19 +1,28 @@
 # Maintenance and UI
 
 ### Servers and APIs opened on the nodes:
-  - A Lighthouse beacon node can be configured to expose an HTTP server by supplying the --http flag. The default listen address is http://127.0.0.1:5052
-  - A Lighthouse validator client can be configured to expose a HTTP server by supplying the --http flag. The default listen address is http://127.0.0.1:5062
-  - Lighthouse provides an extensive suite of metrics and monitoring in the Prometheus export format via a HTTP server built into Lighthouse.These metrics are generally consumed by a Prometheus server and displayed via a Grafana dashboard. These components are available in a docker-compose format at sigp/lighthouse-metrics.By default, these metrics are disabled but can be enabled with the --metrics flag. Start a beacon node with the metrics server enabled:ensure that the metrics are available on the default port: http://localhost:5054/metrics
-  - Start a validator client with the metrics server enabled:lighthouse vc --metrics ensure that the metrics are available on the default port: curl localhost:5064/metrics
-  - Geth: execution node. collects metrics if the --metrics flag is provided at startup. Those metrics are available via an HTTP server if the --metrics.addr flag is also provided. By default the metrics are served at http://127.0.0.1:6060/debug/metrics
-      1. a custom IP address can be provided. A custom port can also be provided to the --metrics.port flag. More computationally expensive metrics are toggled on or off by providing or omitting the --metrics.expensive flag. For example, to serve all metrics at the default address and port:
-      2.  geth <other commands> --metrics --metrics.addr 127.0.0.1 --metrics.expensive
-  - Between Geth (Execution Node) and Lighthouse (Beacon Node) API: In order to connect to a consensus client, Geth must expose a port for the inter-client RPC connection.The RPC connection must be authenticated using a jwtsecret file. This is created and saved to <datadir>/geth/jwtsecret by default but can also be created and saved to a custom location or it can be self-generated and provided to Geth by passing the file path to --authrpc.jwtsecret. The jwtsecret file is required by both Geth and the consensus client. the following command open the RPC :localhost:8551. 
-      1. geth --authrpc.addr localhost --authrpc.port 8551 --authrpc.vhosts localhost --authrpc.jwtsecret /tmp/jwtsecret
-      2. The consensus client must be started with the right port configuration to establish an RPC connection to the local Geth instance. In the example above, localhost:8551 was authorized for this purpose. The consensus clients all have a command similar to --http-webprovider that takes the exposed Geth port as an argument.
-      3.  start lighthouse beacon node with these : --execution-endpoint http://localhost:8551 --execution-jwt /secrets/jwt.hex
+  1. Interacting with the nodes Servers and API
+      - A Lighthouse beacon node can be configured to expose an HTTP server by supplying the --http flag. The default listen address is http://127.0.0.1:5052
+      - A Lighthouse validator client can be configured to expose a HTTP server by supplying the --http flag. The default listen address is http://127.0.0.1:5062
+      - geth HTTP Server : geth --http   default  http://127.0.0.1:8545   http://127.0.0.1:8545/graphql/ui
+      - geth WS Server: WebSocket Server geth --ws --ws.port 8546 --ws.api eth,net,web3  default 127.0.0.1:8546
+            1. Websocket is a bidirectional transport protocol. A Websocket connection is maintained by client and server until it is explicitly terminated by one. Most modern browsers support Websocket which means it has good tooling.
+
+  2. Metrics API and servers:
+      - Lighthouse provides an extensive suite of metrics and monitoring in the Prometheus export format via a HTTP server built into Lighthouse.These metrics are generally consumed by a Prometheus server and displayed via a Grafana dashboard. These components are available in a docker-compose format at sigp/lighthouse-metrics.By default, these metrics are disabled but can be enabled with the --metrics flag. Start a beacon node with the metrics server enabled:ensure that the metrics are available on the default port: http://localhost:5054/metrics
+      - Start a validator client with the metrics server enabled:lighthouse vc --metrics ensure that the metrics are available on the default port: curl localhost:5064/metrics
+      - Geth: execution node. collects metrics if the --metrics flag is provided at startup. Those metrics are available via an HTTP server if the --metrics.addr flag is also provided. By default the metrics are served at http://127.0.0.1:6060/debug/metrics
+          1. a custom IP address can be provided. A custom port can also be provided to the --metrics.port flag. More computationally expensive metrics are toggled on or off by providing or omitting the --metrics.expensive flag. For example, to serve all metrics at the default address and port:
+          2.  geth <other commands> --metrics --metrics.addr 127.0.0.1 --metrics.expensive
+  4. Between Geth (Execution Node) and Lighthouse (Beacon Node) API:
+       - In order to connect to a consensus client, Geth must expose a port for the inter-client RPC connection.The RPC connection must be authenticated using a jwtsecret file. This is created and saved to <datadir>/geth/jwtsecret by default but can also be created and saved to a custom location or it can be self-generated and provided to Geth by passing the file path to --authrpc.jwtsecret. The jwtsecret file is required by both Geth and the consensus client. the following command open the RPC :localhost:8551. 
+            1. geth --authrpc.addr localhost --authrpc.port 8551 --authrpc.vhosts localhost --authrpc.jwtsecret /tmp/jwtsecret
+            2. The consensus client must be started with the right port configuration to establish an RPC connection to the local Geth instance. In the example above, localhost:8551 was authorized for this purpose. The consensus clients all have a command similar to --http-webprovider that takes the exposed Geth port as an argument.
+            3.  start lighthouse beacon node with these : --execution-endpoint http://localhost:8551 --execution-jwt /secrets/jwt.hex
 
 ### Using Geth
+  - Interacting with Geth requires sending requests to specific JSON-RPC API methods.The RPC requests must be sent to the node and the response returned to the client using some transport protocol.JSON-RPC is provided on multiple transports. Geth supports JSON-RPC over HTTP, WebSocket and Unix Domain Sockets. Transports must be enabled through command-line flags. RPC methods are grouped into several categories depending on their purpose. All method names are composed of the namespace, an underscore, and the actual method name within the namespace. For example, the eth_call method resides in the eth namespace.
+  - 
   - Geth is the portal for users to send transactions to Ethereum. The Geth Javascript console is available for this purpose, and the majority of the JSON-RPC API will remain available via web3js or HTTP requests with commands as json payloads. These options are explained in more detail on the Javascript Console page. The Javascript console can be started using the following command in a separate terminal (assuming Geth's IPC file is saved in datadir):
 
 

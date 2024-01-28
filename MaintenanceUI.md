@@ -1,5 +1,41 @@
 # Maintenance and UI
 
+### automatic start up or resume
+  - chmod +x $HOME/cardano-testnet/startTestNode.sh
+  - chmod +x $HOME/ethnode/startBeaconNode.sh
+  - chmod +x $HOME/ethnode/startValidator.sh
+
+  - sudo nano geth.service
+    ```
+      ### content to be writen to geth.service
+      [Unit]
+      Description       = Geth Node Service
+      
+      [Service]
+      User              = steven
+      Type              = simple
+      # WorkingDirectory  = /home/steven/ethnode
+      ExecStart         = /bin/bash -c '/home/steven/ethnode/startExecuteNode.sh'
+      ExecReload        = pkill -HUP geth
+      KillSignal        = SIGINT
+      RestartKillSignal = SIGINT
+      TimeoutStopSec    = 300
+      LimitNOFILE       = 32768
+      Restart           = always
+      RestartSec        = 10
+      SyslogIdentifier  = geth
+      
+      [Install]
+      WantedBy          = multi-user.target
+    ```
+ 
+  - sudo mv $HOME/cardano-testnet/cardano-testnode.service /etc/systemd/system/geth.service
+  - sudo chmod 644 /etc/systemd/system/geth.service
+
+  - check the status:
+      1. sudo systemctl status geth
+      2. journalctl --unit=geth --follow
+
 ### Lighthouse UI Siren
   - Siren is a user interface built for Lighthouse that connects to a Lighthouse Beacon Node and a Lighthouse Validator Client to monitor performance and display key validator metrics.
   - docker run --rm -ti --name siren -p 80:80 sigmaprime/siren

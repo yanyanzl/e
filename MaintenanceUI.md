@@ -1,6 +1,7 @@
 # Maintenance and UI
 
 ### automatic start up or resume
+  - Warning: it will take around 20 minutes for validator to be activated after it is been stopped and then restarted
   - chmod +x $HOME/ethnode/startExecuteNode.sh
   - chmod +x $HOME/ethnode/startBeaconNode.sh
   - chmod +x $HOME/ethnode/startValidator.sh

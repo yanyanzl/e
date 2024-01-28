@@ -1,7 +1,7 @@
 # Maintenance and UI
 
 ### automatic start up or resume
-  - chmod +x $HOME/cardano-testnet/startTestNode.sh
+  - chmod +x $HOME/ethnode/startExecuteNode.sh
   - chmod +x $HOME/ethnode/startBeaconNode.sh
   - chmod +x $HOME/ethnode/startValidator.sh
 
@@ -29,12 +29,77 @@
       WantedBy          = multi-user.target
     ```
  
-  - sudo mv $HOME/cardano-testnet/cardano-testnode.service /etc/systemd/system/geth.service
+  - sudo mv $HOME/ethnode/geth.service /etc/systemd/system/geth.service
   - sudo chmod 644 /etc/systemd/system/geth.service
+  - sudo systemctl daemon-reload
+  - sudo systemctl enable geth
+  - sudo systemctl restart geth
+  - sudo systemctl status geth
+  - journalctl --unit=geth --follow
 
-  - check the status:
-      1. sudo systemctl status geth
-      2. journalctl --unit=geth --follow
+  - sudo nano lighthousebn.service
+    ```
+      ### content to be writen to lighthousebn.service
+      [Unit]
+      Description       = lighthouse beacon node Service
+      
+      [Service]
+      User              = steven
+      Type              = simple
+      # WorkingDirectory  = /home/steven/ethnode
+      ExecStart         = /bin/bash -c '/home/steven/ethnode/startBeaconNode.sh'
+      ExecReload        = pkill -HUP lighthousebn
+      KillSignal        = SIGINT
+      RestartKillSignal = SIGINT
+      TimeoutStopSec    = 300
+      LimitNOFILE       = 32768
+      Restart           = always
+      RestartSec        = 10
+      SyslogIdentifier  = lighthousebn
+      
+      [Install]
+      WantedBy          = multi-user.target
+    ```
+ 
+  - sudo mv $HOME/ethnode/lighthousebn.service /etc/systemd/system/lighthousebn.service
+  - sudo chmod 644 /etc/systemd/system/lighthousebn.service
+  - sudo systemctl daemon-reload
+  - sudo systemctl enable lighthousebn
+  - sudo systemctl restart lighthousebn
+  - sudo systemctl status lighthousebn
+  - journalctl --unit=lighthousebn --follow
+
+  - sudo nano lighthouseva.service
+    ```
+      ### content to be writen to lighthouseva.service
+      [Unit]
+      Description       = lighthouse validator Node Service
+      
+      [Service]
+      User              = steven
+      Type              = simple
+      # WorkingDirectory  = /home/steven/ethnode
+      ExecStart         = /bin/bash -c '/home/steven/ethnode/startValidator.sh'
+      ExecReload        = pkill -HUP lighthouseva
+      KillSignal        = SIGINT
+      RestartKillSignal = SIGINT
+      TimeoutStopSec    = 300
+      LimitNOFILE       = 32768
+      Restart           = always
+      RestartSec        = 10
+      SyslogIdentifier  = lighthouseva
+      
+      [Install]
+      WantedBy          = multi-user.target
+    ```
+ 
+  - sudo mv $HOME/ethnode/lighthouseva.service /etc/systemd/system/lighthouseva.service
+  - sudo chmod 644 /etc/systemd/system/lighthouseva.service
+  - sudo systemctl daemon-reload
+  - sudo systemctl enable lighthouseva
+  - sudo systemctl restart lighthouseva
+  - sudo systemctl status lighthouseva
+  - journalctl --unit=lighthouseva --follow
 
 ### Lighthouse UI Siren
   - Siren is a user interface built for Lighthouse that connects to a Lighthouse Beacon Node and a Lighthouse Validator Client to monitor performance and display key validator metrics.

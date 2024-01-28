@@ -54,9 +54,16 @@
       - git clone --progress https://github.com/sigp/lighthouse-metrics.git
   - download docker-compose
       - sudo apt  install docker-compose
-  - cd lighthouse-metrics
+  - cd ~/metrics/lighthouse-metrics
   - docker-compose up --build (run this command everytime you start the metrics)
-
+  - How to stop:
+      1. solution 1:
+        - cd ~/metrics/lighthouse-metrics
+        - docker-compose stop
+      2. solution 2:
+        - press Ctrl-C to stop a docker-compose process running in the foreground
+      3. For periodic cleanup of all stopped containers, run the following script while your docker host is running: devtools prune
+      4. 
   - 
   - Prometheus is an open-source systems monitoring and alerting toolkit. Prometheus collects and stores its metrics as time series data, i.e. metrics information is stored with the timestamp at which it was recorded, alongside optional key-value pairs called labels.
       1. Install prometheus node exporter:

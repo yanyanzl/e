@@ -3,6 +3,8 @@
 ### APIs opened on the nodes:
   - A Lighthouse beacon node can be configured to expose an HTTP server by supplying the --http flag. The default listen address is http://127.0.0.1:5052
   - A Lighthouse validator client can be configured to expose a HTTP server by supplying the --http flag. The default listen address is http://127.0.0.1:5062
+  - Lighthouse provides an extensive suite of metrics and monitoring in the Prometheus export format via a HTTP server built into Lighthouse.These metrics are generally consumed by a Prometheus server and displayed via a Grafana dashboard. These components are available in a docker-compose format at sigp/lighthouse-metrics.By default, these metrics are disabled but can be enabled with the --metrics flag. Start a beacon node with the metrics server enabled:ensure that the metrics are available on the default port:localhost:5054/metrics
+  - Start a validator client with the metrics server enabled:lighthouse vc --metrics ensure that the metrics are available on the default port: curl localhost:5064/metrics
 
 ### automatic start up or resume
   - Warning: it will take around 20 minutes for validator to be activated after it is been stopped and then restarted

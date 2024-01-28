@@ -1,85 +1,129 @@
+# Setup tools
+
+### useful links
+
 https://holesky.launchpad.ethereum.org/en/
+
 https://besu.hyperledger.org/private-networks/tutorials/quickstart#monitor-nodes-with-prometheus-and-grafana
+
 https://notes.ethereum.org/@launchpad/holesky
 
 https://developers.cardano.org/docs/operate-a-stake-pool/hardening-server
 
 sudo fdisk -l
+
 mount
+
 Press CTRL + ALT + T to open a terminal window.
 
----------------------------------------------
---------------------------secure your server
-# create a new user ethva for the server. with sudo priviledge
+###  -------------------------- secure your server
+### create a new user ethva for the server. with sudo priviledge
+
 sudo useradd -m -s /bin/bash ethva
+
 sudo passwd ethva
+
 sudo usermod -aG sudo ethva
 
-# change to the new user. 
+### change to the new user. 
+
 su - ethva
-# disable root account
+
+### disable root account
+
 sudo passwd -l root
 
-#update your system with the latest pathes available.
+### update your system with the latest pathes available.
 sudo apt-get update -y
+
 sudo apt-get upgrade -y
+
 sudo apt-get autoremove
+
 sudo apt-get autoclean
 
 sudo reboot
 
 
-# enable unattended upgrades to automatically install security updates.
+### enable unattended upgrades to automatically install security updates.
+
 sudo apt-get install unattended-upgrades
+
 sudo dpkg-reconfigure -plow unattended-upgrades
 
-# Generate SSH keys (on your local machine which used to remote login to the host--validator server)
+### Generate SSH keys (on your local machine which used to remote login to the host--validator server)
 ssh-keygen -t ed25519
+
 ssh-copy-id -i $HOME/.ssh/id_ed25519.pub ethva@host002
 
-# Hardening SSH configuration
+### Hardening SSH configuration
 sudo nano /etc/ssh/sshd_config
-# Then locate and update if needed, all the options below
+
+### Then locate and update if needed, all the options below
 Port 6666
+
 PubkeyAuthentication yes
+
 PasswordAuthentication no
+
 PermitRootLogin prohibit-password
+
 PermitEmptyPasswords no
+
 X11Forwarding no
+
 TCPKeepAlive no
+
 Compression no
+
 AllowAgentForwarding no
+
 AllowTcpForwarding no
+
 KbdInteractiveAuthentication no
 
-# valite the change
+### valite the change
 sudo sshd -t
+
 sudo systemctl restart sshd
 
-#diconnect from your server and connect again by:
+### diconnect from your server and connect again by:
 ssh ethva@host002 -p 6666
 
-# Firewall configuration
-# use UFW firewall to secure network access 
-# focusing on ports that are used for SSH, and ethereum node
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-sudo ufw allow to any proto tcp port 6666
-# sudo ufw allow to any proto tcp port <YOUR CARDANO NODE PORT>
+### Firewall configuration
+	use UFW firewall to secure network access 
+	
+ 	focusing on ports that are used for SSH, and ethereum node
+
+	sudo ufw default deny incoming
+	
+ 	sudo ufw default allow outgoing
+  
+	sudo ufw allow to any proto tcp port 6666
+
+### sudo ufw allow to any proto tcp port <YOUR CARDANO NODE PORT>
 sudo ufw allow 9000
+
 sudo ufw allow 30303
+
 sudo ufw enable
+
 sudo ufw status numbered
 
 
-# -------------Fail 2 ban installation and configuratio
+### -------------Fail 2 ban installation and configuratio
 sudo apt-get install fail2ban -y 
+
 sudo systemctl start fail2ban
+
 sudo systemctl enable fail2ban
 
 sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+
 sudo nano /etc/fail2ban/jail.local
-# Locate the [DEFAULT] block and adjust to your needs. Here is a configuration exemple. allows 3 logins attempts within 10minutes, and ban for 1hour any IP that fails. After 1h, if the IP tries again and fails, the bantime will be incremented by factor *2. The maximum bantime is set to 5 weeks.
+
+### Modify the configuration 
+	Locate the [DEFAULT] block and adjust to your needs. Here is a configuration exemple. allows 3 logins attempts within 10minutes, and ban for 1hour any IP that fails. After 1h, if the IP tries again and fails, the bantime will be incremented by factor *2. The maximum bantime is set to 5 weeks.
 
 bantime  = 1h
 bantime.increment = true
@@ -88,7 +132,7 @@ bantime.maxtime = 5w
 findtime  = 10m
 maxretry = 3
 
-# Locate the [sshd] block and adjust to your needs.
+### Locate the [sshd] block and adjust to your needs.
 mode   = aggressive
 enabled = true
 port    = 6666                   

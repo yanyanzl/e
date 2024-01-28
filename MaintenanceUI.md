@@ -27,6 +27,22 @@
   - 
   - Geth is the portal for users to send transactions to Ethereum. The Geth Javascript console is available for this purpose, and the majority of the JSON-RPC API will remain available via web3js or HTTP requests with commands as json payloads. These options are explained in more detail on the Javascript Console page. The Javascript console can be started using the following command in a separate terminal (assuming Geth's IPC file is saved in datadir):
 
+  - solution 1 HTTP :
+      1. curl --data '{"jsonrpc":"2.0","method":"eth_getBalance", "params": ["0x9b1d35635cc34752ca54713bb99d38614f63c955", "latest"], "id":2}' -H "Content-Type: application/json" localhost:8545
+      2. complex and not easy to understand. 
+  -  solution 2 Web3.js.
+      1. The purpose of Geth's Javascript console is to provide a built-in environment to use a subset of the Web3.js libraries to interact with a Geth node.
+      2. geth attach http://127.0.0.1:8545
+      3. or The second way is to provide the console command when Geth is started up. This starts the node and runs the console in the same terminal. It is therefore convenient to suppress the logs from the node to prevent them from obscuring the console. If the logs are not needed, they can be redirected to the dev/null path, effectively muting them. Alternatively, if the logs are required they can be redirected to a text file. The level of detail provided in the logs can be adjusted by providing a value between 1-6 to the --verbosity flag as in the example below:
+    ```
+        # to mute logs
+        geth <other flags> console 2> /dev/null
+        
+        # to save logs to file
+        geth <other flags> console --verbosity 3 2> geth-logs.log
+    ```
+  -  
+
 
 ### automatic start up or resume
   - Warning: it will take around 20 minutes for validator to be activated after it is been stopped and then restarted

@@ -7,6 +7,8 @@
       - geth HTTP Server : geth --http   default  http://127.0.0.1:8545   http://127.0.0.1:8545/graphql/ui
       - geth WS Server: WebSocket Server geth --ws --ws.port 8546 --ws.api eth,net,web3  default 127.0.0.1:8546
             1. Websocket is a bidirectional transport protocol. A Websocket connection is maintained by client and server until it is explicitly terminated by one. Most modern browsers support Websocket which means it has good tooling.
+      - geth IPC Server : IPC Server
+            1. IPC is normally available for use in local environments where the node and the console exist on the same machine. Geth creates a pipe in the computers local file system (at ipcpath) that configures a connection between node and console. The geth.ipc file can also be used by other processes on the same machine to interact with Geth.  
 
   2. Metrics API and servers:
       - Lighthouse provides an extensive suite of metrics and monitoring in the Prometheus export format via a HTTP server built into Lighthouse.These metrics are generally consumed by a Prometheus server and displayed via a Grafana dashboard. These components are available in a docker-compose format at sigp/lighthouse-metrics.By default, these metrics are disabled but can be enabled with the --metrics flag. Start a beacon node with the metrics server enabled:ensure that the metrics are available on the default port: http://localhost:5054/metrics

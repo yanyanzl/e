@@ -69,6 +69,7 @@
   - sudo systemctl status lighthousebn
   - journalctl --unit=lighthousebn --follow
 
+### warning: don't start validator automatically . it has high risk to duplicate or start more than one instance.
   - sudo nano lighthouseva.service
     ```
       ### content to be writen to lighthouseva.service

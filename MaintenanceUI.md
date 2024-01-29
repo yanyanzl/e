@@ -55,6 +55,19 @@
       3. Most users use Clef by manually approving transactions through the UI as in the schematic above, but it is also possible to configure Clef to sign transactions without always prompting the user. This requires defining the precise conditions under which a transaction will be signed. These conditions are known as Rules and they are small Javascript snippets that are attested by the user by injecting the snippet's hash into Clef's secure whitelist. Clef is then started with the rule file, so that requests that satisfy the conditions in the whitelisted rule files are automatically signed.
       4. clef --keystore /my/keystore --chainid 17000 --http --configdir $HOME/ethnode/clef
       5. Clef can be instructed to run an attested rule file simply by passing the path to rules.js to the --rules flag
+      6. For most users, manually confirming every transaction is the way to go. However, there are cases when it makes sense to set up some rules which permit Clef to sign a transaction without prompting the user. The rule file is a tiny JavaScript snippet that you can program however you want: ruleset.js
+      7. Of course, Clef isn't going to just accept and run arbitrary scripts you give it, that would be dangerous if someone changes your rule file! Instead, you need to explicitly attest the rule file, which entails injecting its hash into Clef's secure store. Attestations : SHA256 hash into Clef's secure store. The following code snippet shows how to calculate a SHA256 hash for a file named rules.js and pass it to Clef. Note that Clef will prompt the user to provide the master password because the Clef store has to be decrypted in order to add the attestation to it.
+         ```
+         $ sha256sum rules.js
+          645b58e4f945e24d0221714ff29f6aa8e860382ced43490529db1695f5fcc71c  rules.js
+
+          $ clef attest 645b58e4f945e24d0221714ff29f6aa8e860382ced43490529db1695f5fcc71c
+          Decrypt master seed of clef
+          Password:
+            INFO [07-01|13:25:03.290] Ruleset attestation updated
+           sha256=645b58e4f945e24d0221714ff29f6aa8e860382ced43490529db1695f5fcc71c
+          ```
+      8. 
 
 
 ### automatic start up or resume

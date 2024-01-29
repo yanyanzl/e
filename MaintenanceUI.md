@@ -60,14 +60,14 @@
          ```
          $ sha256sum rules.js
           645b58e4f945e24d0221714ff29f6aa8e860382ced43490529db1695f5fcc71c  rules.js
-
-          $ clef attest 645b58e4f945e24d0221714ff29f6aa8e860382ced43490529db1695f5fcc71c
+          # WARNING: here you must use the same --keystore and --configdir as the one you start your clef console
+          $ clef --keystore /home/steven/ethnode/validator_keys --configdir /home/steven/ethnode/clef attest  645b58e4f945e24d0221714ff29f6aa8e860382ced43490529db1695f5fcc71c
           Decrypt master seed of clef
           Password:
             INFO [07-01|13:25:03.290] Ruleset attestation updated
            sha256=645b58e4f945e24d0221714ff29f6aa8e860382ced43490529db1695f5fcc71c
           ```
-      8. 
+      8. At this point, we can start Clef with the rule file: clef --keystore ~/.ethereum/rinkeby/keystore --chainid 4 --rules rules.js
 
 
 ### automatic start up or resume

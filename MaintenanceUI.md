@@ -8,7 +8,9 @@
       - geth WS Server: WebSocket Server geth --ws --ws.port 8546 --ws.api eth,net,web3  default 127.0.0.1:8546
             1. Websocket is a bidirectional transport protocol. A Websocket connection is maintained by client and server until it is explicitly terminated by one. Most modern browsers support Websocket which means it has good tooling.
       - geth IPC Server : IPC Server
-            1. IPC is normally available for use in local environments where the node and the console exist on the same machine. Geth creates a pipe in the computers local file system (at ipcpath) that configures a connection between node and console. The geth.ipc file can also be used by other processes on the same machine to interact with Geth.  
+            1. IPC is normally available for use in local environments where the node and the console exist on the same machine. Geth creates a pipe in the computers local file system (at ipcpath) that configures a connection between node and console. The geth.ipc file can also be used by other processes on the same machine to interact with Geth.
+
+      - To enable communication with Clef using Curl, --http can be passed which will start an HTTP server on http://localhost:8550 by default.
 
   2. Metrics API and servers:
       - Lighthouse provides an extensive suite of metrics and monitoring in the Prometheus export format via a HTTP server built into Lighthouse.These metrics are generally consumed by a Prometheus server and displayed via a Grafana dashboard. These components are available in a docker-compose format at sigp/lighthouse-metrics.By default, these metrics are disabled but can be enabled with the --metrics flag. Start a beacon node with the metrics server enabled:ensure that the metrics are available on the default port: http://localhost:5054/metrics
@@ -29,7 +31,11 @@
 
   - solution 1 HTTP :
       1. curl --data '{"jsonrpc":"2.0","method":"eth_getBalance", "params": ["0x9b1d35635cc34752ca54713bb99d38614f63c955", "latest"], "id":2}' -H "Content-Type: application/json" localhost:8545
-      2. complex and not easy to understand. 
+      2. curl -H "Content-Type: application/json" -X POST localhost:8545 --data '{"method":"eth_call","params":[{"to":"0xebe8efa441b9302a0d7eaecc277c09d20d684540","data":"0x45848dfc"},"latest"],"id":1,"jsonrpc":"2.0"}' 
+
+      3. complex and not easy to understand.
+   
+  
   -  solution 2 Web3.js.
       1. The purpose of Geth's Javascript console is to provide a built-in environment to use a subset of the Web3.js libraries to interact with a Geth node.
       2. geth attach http://127.0.0.1:8545
@@ -41,7 +47,11 @@
         # to save logs to file
         geth <other flags> console --verbosity 3 2> geth-logs.log
     ```
-  -  
+  - Clef:  Clef is an account management tool. Clef is a tool for signing transactions and data in a secure local environment.it can be started by command: clef init
+      1. Clef listens on http.addr:http.port or ipcpath - the same as Geth - and expects messages to be formatted using the JSON-RPC 2.0 standard.
+      2. Clef communicates with the process that invoked the binary using stin/stout. The process invoking the binary is usually the native console-based user interface (UI) but there is also an API that enables communication with an external UI. This has to be enabled using --stdio-ui at startup
+      3. Most users use Clef by manually approving transactions through the UI as in the schematic above, but it is also possible to configure Clef to sign transactions without always prompting the user. This requires defining the precise conditions under which a transaction will be signed. These conditions are known as Rules and they are small Javascript snippets that are attested by the user by injecting the snippet's hash into Clef's secure whitelist. Clef is then started with the rule file, so that requests that satisfy the conditions in the whitelisted rule files are automatically signed.
+      4. clef --keystore /my/keystore --chainid 17000
 
 
 ### automatic start up or resume

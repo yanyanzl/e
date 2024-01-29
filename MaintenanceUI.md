@@ -38,7 +38,7 @@
   
   -  solution 2 Web3.js.
       1. The purpose of Geth's Javascript console is to provide a built-in environment to use a subset of the Web3.js libraries to interact with a Geth node.
-      2. geth attach http://127.0.0.1:8545
+      2. geth attach http://127.0.0.1:8545 or geth attach ipc://home/steven/.ethereum/holesky/geth.ipc
       3. or The second way is to provide the console command when Geth is started up. This starts the node and runs the console in the same terminal. It is therefore convenient to suppress the logs from the node to prevent them from obscuring the console. If the logs are not needed, they can be redirected to the dev/null path, effectively muting them. Alternatively, if the logs are required they can be redirected to a text file. The level of detail provided in the logs can be adjusted by providing a value between 1-6 to the --verbosity flag as in the example below:
     ```
         # to mute logs
@@ -47,11 +47,14 @@
         # to save logs to file
         geth <other flags> console --verbosity 3 2> geth-logs.log
     ```
+    
+
   - Clef:  Clef is an account management tool. Clef is a tool for signing transactions and data in a secure local environment.it can be started by command: clef init
       1. Clef listens on http.addr:http.port or ipcpath - the same as Geth - and expects messages to be formatted using the JSON-RPC 2.0 standard.
       2. Clef communicates with the process that invoked the binary using stin/stout. The process invoking the binary is usually the native console-based user interface (UI) but there is also an API that enables communication with an external UI. This has to be enabled using --stdio-ui at startup
       3. Most users use Clef by manually approving transactions through the UI as in the schematic above, but it is also possible to configure Clef to sign transactions without always prompting the user. This requires defining the precise conditions under which a transaction will be signed. These conditions are known as Rules and they are small Javascript snippets that are attested by the user by injecting the snippet's hash into Clef's secure whitelist. Clef is then started with the rule file, so that requests that satisfy the conditions in the whitelisted rule files are automatically signed.
-      4. clef --keystore /my/keystore --chainid 17000
+      4. clef --keystore /my/keystore --chainid 17000 --http --configdir $HOME/ethnode/clef
+      5. Clef can be instructed to run an attested rule file simply by passing the path to rules.js to the --rules flag
 
 
 ### automatic start up or resume

@@ -14,3 +14,5 @@ eth.sendTransaction({
 
 HTTP API: 
 curl -H "Content-Type: application/json" localhost:8545 --data '{"jsonrpc":"2.0","method":"eth_getBalance", "params": ["0xb4031eb739d8412df3fe9f749443896576e8e27f", "latest"], "id":2}' 
+
+curl -H "Content-Type: application/json" localhost:8545 --data '{ "id": 1, "jsonrpc": "2.0", "method": "eth_subscribe", "params": ["newHeads"] }'

@@ -237,7 +237,10 @@
         - press Ctrl-C to stop a docker-compose process running in the foreground
       3. For periodic cleanup of all stopped containers, run the following script while your docker host is running: devtools prune
       4. 
-  - 
+
+
+
+ ----------------------------------------- below is not useful anymore. ---------- 
   - Prometheus is an open-source systems monitoring and alerting toolkit. Prometheus collects and stores its metrics as time series data, i.e. metrics information is stored with the timestamp at which it was recorded, alongside optional key-value pairs called labels.
       1. Install prometheus node exporter:
           - sudo apt-get install -y prometheus-node-exporter

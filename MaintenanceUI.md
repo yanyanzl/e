@@ -281,6 +281,7 @@ sudo -u <user> geth --datadir <path> snapshot prune-state # wait for pruning to 
 sudo systemctl start geth # restart geth
   - The pruning could take 4-5 hours to complete. Once finished, restart Geth.
 
+### Light house: How to prune historic states
 
 ### Partial Withdrawals
   - if a validator has a withdrawal credential type 0x01, any rewards above 32ETH will be periodically withdrawn to the withdrawal address. This is also known as the "validator sweep", i.e., once the "validator sweep" reaches your validator's index, your rewards will be withdrawn to the withdrawal address. At the time of writing, with 560,000+ validators on the Ethereum mainnet, you shall expect to receive the rewards approximately every 5 days.

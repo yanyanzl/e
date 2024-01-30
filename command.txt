@@ -20,10 +20,86 @@ eth.sendTransaction({
   value: web3.toWei(0.5, 'ether')
 });
 
+
+
 { "id": 1, "jsonrpc": "2.0", "method": "eth_subscribe", "params": ["newHeads"] }
 
 
 HTTP API: 
+
+Shows the status of validator at index 1 at the head state.
+curl -X GET "http://localhost:5052/eth/v1/beacon/states/head/validators/1565803" -H  "accept: application/json" | jq
+
 curl -H "Content-Type: application/json" localhost:8545 --data '{"jsonrpc":"2.0","method":"eth_getBalance", "params": ["0xb4031eb739d8412df3fe9f749443896576e8e27f", "latest"], "id":2}' 
 
 curl -H "Content-Type: application/json" localhost:8545 --data '{ "id": 1, "jsonrpc": "2.0", "method": "eth_subscribe", "params": ["newHeads"] }'
+
+Validator API
+GET /lighthouse/version
+DATADIR=~/.lighthouse/holesky/
+curl -X GET "http://localhost:5062/lighthouse/version" -H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" | jq
+
+GET /lighthouse/health
+curl -X GET "http://localhost:5062/lighthouse/health" -H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" | jq
+
+GET /lighthouse/ui/health
+curl -X GET "http://localhost:5062/lighthouse/ui/health" -H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" | jq
+
+GET /lighthouse/ui/graffiti
+curl -X GET "http://localhost:5062/lighthouse/ui/graffiti" -H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" | jq
+
+GET /lighthouse/logs
+curl -X GET "http://localhost:5062/lighthouse/logs"
+
+
+GET /lighthouse/spec
+Returns the Ethereum proof-of-stake consensus specification loaded for this validator.
+curl -X GET "http://localhost:5062/lighthouse/spec" -H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" | jq
+
+GET /lighthouse/auth
+Fetch the filesystem path of the authorization token. Unlike the other endpoints this may be called without providing an authorization token.
+curl http://localhost:5062/lighthouse/auth | jq
+
+GET /lighthouse/validators
+curl -X GET "http://localhost:5062/lighthouse/validators/" -H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" | jq
+
+GET /lighthouse/validators/:voting_pubkey
+curl -X GET "http://localhost:5062/lighthouse/validators/0x8503801f1f241a0da53391542688e47cea8d477c3c03cf75d387f6bcccc58015cef7e30434cbb306ca86247a5404e5a7" -H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" | jq
+
+
+PATCH /lighthouse/validators/:voting_pubkey
+Update some values for the validator with voting_pubkey. Possible fields: enabled, gas_limit, builder_proposals, builder_boost_factor, prefer_builder_proposals and graffiti. The following example updates a validator from enabled: true to enabled: false.
+curl -X PATCH "http://localhost:5062/lighthouse/validators/0x8503801f1f241a0da53391542688e47cea8d477c3c03cf75d387f6bcccc58015cef7e30434cbb306ca86247a5404e5a7" \
+-H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" \
+-H "Content-Type: application/json" \
+-d "{\"enabled\":false}" | jq
+
+
+Beacon Node
+/lighthouse/ui/validator_metrics
+curl -X POST "http://localhost:5052/lighthouse/ui/validator_metrics" -d '{"indices": [12345]}' -H "Content-Type: application/json" | jq
+
+/lighthouse/syncing
+Returns the sync status of the beacon node.
+curl -X GET "http://localhost:5052/lighthouse/syncing" -H  "accept: application/json" | jq
+
+/lighthouse/eth1/syncing
+Returns information regarding execution layer, as it is required for use in consensus layer
+curl -X GET "http://localhost:5052/lighthouse/eth1/syncing" -H  "accept: application/json" | jq
+
+/lighthouse/peers/connected
+curl -X GET "http://localhost:5052/lighthouse/peers/connected" -H  "accept: application/json" | jq
+
+/lighthouse/database/info
+curl "http://localhost:5052/lighthouse/database/info" | jq
+
+curl -X GET "http://localhost:5052/lighthouse/analysis/attestation_performance/global?start_epoch=1&end_epoch=1" | jq
+
+
+
+/lighthouse/health
+curl -X GET "http://localhost:5052/lighthouse/health" -H  "accept: application/json" | jq
+
+/lighthouse/ui/health
+Returns information regarding the health of the host machine.
+curl -X GET "http://localhost:5052/lighthouse/ui/health" -H  "accept: application/json" | jq

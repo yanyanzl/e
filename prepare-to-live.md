@@ -27,7 +27,7 @@ sudo timedatectl set-ntp on
   - For your validator to be capable of withdrawals of any kind, a withdrawal address must be provided and registered to your account on the Beacon Chain. This should be an address you control, and cannot be changed once set.
   - New validators (not yet deposited)
     - If you’re preparing to make a deposit to activate a new validator, you can (and should) provide a withdrawal address with your initial deposit. This is done at time of key generation, and is then included in your deposit data json file deposit_data-<timestamp>.json which is submitted with your 32 ETH deposit transaction.Depending which method you use to generate your keys:
-
+      - https://github.com/ethereum/staking-deposit-cli/releases 
       - Staking Deposit CLI: This is done by using the “eth1 withdrawal address” (--eth1_withdrawal_address) flag when generating your keys with the Staking Deposit CLI.
           - ./deposit.sh new-mnemonic --num_validators=1 --mnemonic_language=english --chain=holesky --eth1_withdrawal_address=0xE05F2B8aa7f17E04D486a2Cf0A6ae66c7788fFc0
         

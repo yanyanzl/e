@@ -238,8 +238,49 @@
       3. For periodic cleanup of all stopped containers, run the following script while your docker host is running: devtools prune
       4. 
 
+###  shutdowns
+  - It is always best to shut down Geth gracefully, i.e. using a shutdown command such as ctrl-c or systemctl stop
+  - If an unexpected shutdown does occur, the removedb subcommand can be used to delete the state database and resync it from the ancient database. This should get the database back up and running.
 
+### Backup & Restore
+  - Cleanup Geth's blockchain and state databases can be removed with: geth removedb
+  - Specifically, passing the removedb command with no arguments removes the full node state database, ancient database and light node database
+  - Export the blockchain in binary format with: geth export <filename>
+  - Or if you want to back up portions of the chain over time, a first and last block can be specified. For example, to back up the first epoch: geth export <filename> 0 29999
+  - Import binary-format blockchain exports with: geth import <filename>
+  - REMEMBER YOUR PASSWORD and BACKUP YOUR KEYSTORE!
+  - Ethereum ETL lets you convert blockchain data into convenient formats like CSVs and relational databases.
+  - 
 
+### Geth Logs
+  - A Geth node continually reports messages to the console allowing users to monitor Geth's current status in real-time.
+  - Log messages are displayed to the console by default. The messages can be tuned to be more or less detailed by passing --verbosity The default is --verbosity 3.
+  - Log messages can also be redirected so they are saved to a text file instead of being displayed in the console. In Linux the syntax >> <path> 2>&1 redirects both stdout and stderr messages to <path>. For example:
+  - geth --verbosity 5 >> /path/eth.log 2>&1
+
+  - The sync can be confirmed using eth.syncing - it will return false if the node is in sync
+  - Transaction logs Transactions submitted over local IPC, Websockets or HTTP connections are reported in the console logs.
+
+### connecting to peers
+  - Geth continuously attempts to connect to other nodes on the network until it has enough peers. If UPnP (Universal Plug and Play) is enabled at the router or Ethereum is run on an Internet-facing server, it will also accept connections from other nodes. Geth finds peers using the discovery protocol. In the discovery protocol, nodes exchange connectivity details and then establish sessions (RLPx). If the nodes support compatible sub-protocols they can start exchanging Ethereum data on the wire.
+  - A new node entering the network for the first time gets introduced to a set of peers by a bootstrap node ("bootnode") whose sole purpose is to connect new nodes to peers. The endpoints for these bootnodes are hardcoded into Geth, but they can also be specified by providing the --bootnode flag along with comma-separated bootnode addresses in the form of enodes on startup
+  - geth --bootnodes enode://pubkey1@ip1:port1,enode://pubkey2@ip2:port2,enode://pubkey3@ip3:port3
+  - Checking Connectivity : geth attach then net.listening and net.peerCount and admin.peers
+  - admin.nodeInfo returns the name and connectivity details for the local node.
+  - Peer limit By default, the limit is 50 peers, however, this can be updated by passing a value to --maxpeers 15
+
+### pruning
+  - A snap-sync'd Geth node currently requires more than 650 GB of disk space to store the historic blockchain data. With default cache size the database grows by about 14 GB/week. This means that Geth users will rapidly run out of space on 1TB hard drives. To solve this problem without needing to purchase additional hardware, Geth can be pruned. Pruning is the process of erasing older data to save disk space
+  - users have been able to trigger a snapshot offline prune to bring the total storage back down to the original ~650 GB. The pruning time depends on your hardware but it can take upwards of 12 hours. This has to be done periodically to keep the total disk storage within the bounds of the local hardware (e.g. every month or so for a 1TB disk).
+  - Pruning command: For a normal Geth node, Geth should be stopped and the following command executed to start a offline state prune:
+  - geth snapshot prune-state
+  - or
+  - sudo systemctl stop geth # stop geth, wait >3mins to ensure clean shutdown
+tmux # tmux enables pruning to keep running even if you disconnect
+sudo -u <user> geth --datadir <path> snapshot prune-state # wait for pruning to finish
+sudo systemctl start geth # restart geth
+  - The pruning could take 4-5 hours to complete. Once finished, restart Geth.
+  - 
  ----------------------------------------- below is not useful anymore. ---------- 
   - Prometheus is an open-source systems monitoring and alerting toolkit. Prometheus collects and stores its metrics as time series data, i.e. metrics information is stored with the timestamp at which it was recorded, alongside optional key-value pairs called labels.
       1. Install prometheus node exporter:

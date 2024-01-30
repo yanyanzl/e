@@ -34,10 +34,16 @@ curl -H "Content-Type: application/json" localhost:8545 --data '{"jsonrpc":"2.0"
 
 curl -H "Content-Type: application/json" localhost:8545 --data '{ "id": 1, "jsonrpc": "2.0", "method": "eth_subscribe", "params": ["newHeads"] }'
 
-Validator API
+Validator API 
+The validator client HTTP server requires that all requests have the following HTTP header:
+    Name: Authorization
+    Value: Bearer <api-token>
+
 GET /lighthouse/version
 DATADIR=~/.lighthouse/holesky/
 curl -X GET "http://localhost:5062/lighthouse/version" -H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" | jq
+or
+curl -v  "http://localhost:5062/lighthouse/version" -H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" | jq
 
 GET /lighthouse/health
 curl -X GET "http://localhost:5062/lighthouse/health" -H "Authorization: Bearer $(cat ${DATADIR}/validators/api-token.txt)" | jq

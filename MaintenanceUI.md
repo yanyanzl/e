@@ -280,7 +280,12 @@ tmux # tmux enables pruning to keep running even if you disconnect
 sudo -u <user> geth --datadir <path> snapshot prune-state # wait for pruning to finish
 sudo systemctl start geth # restart geth
   - The pruning could take 4-5 hours to complete. Once finished, restart Geth.
-  - 
+
+
+### Partial Withdrawals
+  - if a validator has a withdrawal credential type 0x01, any rewards above 32ETH will be periodically withdrawn to the withdrawal address. This is also known as the "validator sweep", i.e., once the "validator sweep" reaches your validator's index, your rewards will be withdrawn to the withdrawal address. At the time of writing, with 560,000+ validators on the Ethereum mainnet, you shall expect to receive the rewards approximately every 5 days.
+
+
  ----------------------------------------- below is not useful anymore. ---------- 
   - Prometheus is an open-source systems monitoring and alerting toolkit. Prometheus collects and stores its metrics as time series data, i.e. metrics information is stored with the timestamp at which it was recorded, alongside optional key-value pairs called labels.
       1. Install prometheus node exporter:

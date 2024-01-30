@@ -26,7 +26,17 @@
     - For Ethereum Mainnet and public testnets (for example, Goerli) the genesis configuration definition is in Besu and used when specifying a public network using the --network command line option.
     - For private networks, create a JSON genesis file, then specify the genesis file using the --genesis-file command line option.
 
-## Mechanics of withdrawals: How they work
+### Maximal extractable value (MEV)
+    - Maximal extractable value (MEV) refers to the maximum value that can be extracted from block production in excess of the standard block reward and gas fees by including, excluding, and changing the order of transactions in a block.
+    - In theory MEV accrues entirely to validators because they are the only party that can guarantee the execution of a profitable MEV opportunity. In practice, however, a large portion of MEV is extracted by independent network participants referred to as "searchers." Searchers run complex algorithms on blockchain data to detect profitable MEV opportunities and have bots to automatically submit those profitable transactions to the network.
+
+    - Validators do get a portion of the full MEV amount anyway because searchers are willing to pay high gas fees (which go to the validator) in exchange for higher likelihood of inclusion of their profitable transactions in a block. Assuming searchers are economically rational, the gas fee that a searcher is willing to pay will be an amount up to 100% of the searcher's MEV (because if the gas fee was higher, the searcher would lose money).
+
+    - With that, for some highly competitive MEV opportunities, such as DEX arbitrage, searchers may have to pay 90% or even more of their total MEV revenue in gas fees to the validator because so many people want to run the same profitable arbitrage trade. This is because the only way to guarantee that their arbitrage transaction runs is if they submit the transaction with the highest gas price.
+    - Using the builder API is not known to introduce additional slashing risks, however a live-ness risk (i.e. the ability for the chain to produce valid blocks) is introduced because your node will be signing blocks without executing the transactions within the block. Therefore, it won't know whether the transactions are valid, and it may sign a block that the network will reject. This would lead to a missed proposal and the opportunity cost of lost block rewards.
+    - The beacon node and validator client each require a new flag for lighthouse to be fully compatible with builder API servers.
+
+### Mechanics of withdrawals: How they work
     - Withdrawals as an operation, not a new transaction type
     - Ethereum users are used to transactions being executed in a manual way—if you want to transfer funds, you have to sign a transaction and pay the gas.
     - EIP-4895, titled Beacon chain push withdrawals as operations, implements a design that simplified this whole process for stakers.

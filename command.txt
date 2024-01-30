@@ -1,5 +1,16 @@
-geth attach ipc://home/steven/.ethereum/holesky/geth.ipc
+------------------------------------------
+######### all applications to be started
 
+./home/steven/ethnode/startExecuteNode.sh
+./home/steven/ethnode/startExecuteNode.sh
+./home/steven/ethnode/startValidator.sh
+
+cd ~/metrics/lighthouse-metrics
+docker-compose up --build
+
+geth attach ~/.ethereum/holesky/geth.ipc
+./home/steven/ethnode/clef/startClef.sh
+-------------------------------------------
 
 eth.getBalance(eth.accounts[0]);
 

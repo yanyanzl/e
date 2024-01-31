@@ -16,10 +16,17 @@
     
 ### Execution clients
     - Execution clients, such as Besu, manage the execution layer, including executing transactions and updating the world state. Execution clients serve JSON-RPC API requests and communicate with each other in a peer-to-peer network.
+    - What does Geth do?
+    - As an execution client, Geth is responsible for creating the execution payloads - the list of transactions, updated state trie plus other execution related data - that consensus clients include in their blocks. Geth is also responsible for re-executing transactions that arrive in new blocks to ensure they are valid. Executing transactions is done on Geth's embedded computer, known as the Ethereum Virtual Machine (EVM).
+
+Geth also offers a user-interface to Ethereum by exposing a set of RPC methods that enable users to query the Ethereum blockchain, submit transactions and deploy smart contracts. Often, the RPC calls are abstracted by a library such as Web3js or Web3py for example in Geth's built-in Javascript console, development frameworks or web-apps.
 
 ### Consensus clients
     - Consensus clients, such as Teku, contain beacon node and validator client implementations. The beacon node is the primary link to the Beacon Chain (consensus layer). The validator client performs validator duties on the consensus layer. Consensus clients serve REST API requests and communicate with each other in a peer-to-peer network.
+    - The consensus client deals with all the logic that enables a node to stay in sync with the Ethereum network. This includes receiving blocks from peers and running a fork choice algorithm to ensure the node always follows the chain with the greatest accumulation of attestations (weighted by validator effective balances). The consensus client has its own peer-to-peer network, separate from the network that connects execution clients to each other. The consensus clients share blocks and attestations over their peer-to-peer network. The consensus client itself does not participate in attesting to or proposing blocks - this is done by a validator which is an optional add-on to a consensus client. A consensus client without a validator only keeps up with the head of the chain, allowing the node to stay synced. This enables a user to transact with Ethereum using their execution client, confident that they are on the right chain.
 
+### Validators
+    - Validators can be added to consensus clients if 32 ETH have been sent to the deposit contract. The validator client comes bundled with the consensus client and can be added to a node at any time. The validator handles attestations and block proposals. They enable a node to accrue rewards or lose ETH via penalties or slashing. Running the validator software also makes a node eligible to be selected to propose a new block.
 
 ### Genesis file
     - The genesis file defines the first block in the chain, and the first block defines which chain you want to join.

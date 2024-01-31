@@ -43,5 +43,5 @@ rocketpool wallet test-recovery -a 0xe05f2b8aa7f17e04d486a2cf0a6ae66c7788ffc0
         - rocketpool node register
      
 ### Setting your Withdrawal Address
-Before anything else, we highly recommended you change the withdrawal address for your node. This is the address that all of your RPL checkpoint rewards, your staked RPL, and your Beacon Chain ETH will be sent to when you claim your checkpoint rewards or exit your validator and withdraw from your minipool.
-
+  - Before anything else, we highly recommended you change the withdrawal address for your node. This is the address that all of your RPL checkpoint rewards, your staked RPL, and your Beacon Chain ETH will be sent to when you claim your checkpoint rewards or exit your validator and withdraw from your minipool.
+  - rocketpool node set-withdrawal-address <your cold wallet address or ENS name>

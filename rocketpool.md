@@ -28,4 +28,6 @@ rocketpool node sync
 ### To check on the logs, 
   - use the rocketpool service logs <container> command, where <container> is one of eth1, eth2, validator, api, node, or watchtower
 
-### Creating a New Wallet (after both consensus and execution node all synced)
+### Creating a New Wallet or import from Metamask etc. (after both consensus and execution node all synced)
+this will need the mnemonic phrase for your external wallet:
+rocketpool wallet test-recovery -a 0xe05f2b8aa7f17e04d486a2cf0a6ae66c7788ffc0

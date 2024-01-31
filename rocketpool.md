@@ -18,3 +18,14 @@ rocketpool service install -d
 rocketpool service config
 
 ### Starting and Stopping the Rocket Pool Services 
+rocketpool service stop
+rocketpool service start
+
+### Confirming the Correct Version and Network 
+rocketpool service version
+rocketpool node sync
+
+### To check on the logs, 
+  - use the rocketpool service logs <container> command, where <container> is one of eth1, eth2, validator, api, node, or watchtower
+
+### Creating a New Wallet (after both consensus and execution node all synced)

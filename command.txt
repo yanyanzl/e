@@ -2,7 +2,7 @@
 ######### all applications to be started
 
 ./home/steven/ethnode/startExecuteNode.sh
-./home/steven/ethnode/startExecuteNode.sh
+./home/steven/ethnode/startBeaconNode.sh
 ./home/steven/ethnode/startValidator.sh
 
 cd ~/metrics/lighthouse-metrics

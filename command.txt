@@ -12,6 +12,23 @@ geth attach ~/.ethereum/holesky/geth.ipc
 ./home/steven/ethnode/clef/startClef.sh
 -------------------------------------------
 
+#### commands to be executed in separate terminals to start Geth, Lodestar and Clef so that they all interoperate
+#### clients will connect to Sepolia testnet
+#### assumes go-ethereum and lodestar are built from source in the /home directory
+#### keys are stored in ~/go-ethereum/sepolia-data/keystore
+
+
+# to start Geth
+./geth --sepolia --datadir sepolia-data --authrpc.addr localhost --authrpc.port 8551 --authrpc.vhosts localhost --authrpc.jwtsecret sepolia-data/jwtsecret --http --signer sepolia-data/clef/clef.ipc
+
+# to start Clef
+./clef --chainid 11155111 --keystore ~/.go-ethereum/sepolia-data/keystore --configdir ~/go-ethereum/sepolia-data/clef
+
+# to start lodestar
+./lodestar beacon --network sepolia --dataDir sepolia-data --jwt-secret ~/go-ethereum/sepolia-data/jwtsecret --eth1.providerUrls http://localhost:8551 --checkpointSyncUrl=https://sepolia.checkpoint-sync.ethpandaops.io --rest --rest.address 0.0.0.0
+
+
+
 eth.getBalance(eth.accounts[0]);
 
 eth.sendTransaction({

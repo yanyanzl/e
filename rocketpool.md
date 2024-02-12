@@ -15,6 +15,8 @@ or if you installed docker and docker-compose before install rocketpool. use the
 rocketpool service install -d
 
 
+rocketpool help
+
 rocketpool service config
 
 ### Starting and Stopping the Rocket Pool Services 
@@ -26,6 +28,7 @@ rocketpool service version
 rocketpool node sync
 
 ### To check on the logs, 
+  - use the rocketpool service logs
   - use the rocketpool service logs <container> command, where <container> is one of eth1, eth2, validator, api, node, or watchtower
 
 ### Creating a New Wallet or import from Metamask etc. (after both consensus and execution node all synced)

@@ -1,16 +1,25 @@
 ------------------------------------------
 ######### all applications to be started
-
+./home/steven/ethnode/clef/startClef.sh
 ./home/steven/ethnode/startExecuteNode.sh
 ./home/steven/ethnode/startBeaconNode.sh
+
+
 ./home/steven/ethnode/startValidator.sh
 
 cd ~/metrics/lighthouse-metrics
 docker-compose up --build
 
 geth attach ~/.ethereum/holesky/geth.ipc
-./home/steven/ethnode/clef/startClef.sh
 -------------------------------------------
+
+-------------------------------------------
+#### monitoring tools
+htop
+df -h
+
+--------------------------------------------
+
 
 #### commands to be executed in separate terminals to start Geth, Lodestar and Clef so that they all interoperate
 #### clients will connect to Sepolia testnet

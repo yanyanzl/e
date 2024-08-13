@@ -1,5 +1,25 @@
 # Maintenance and UI
 
+### pruning
+lighthouse:
+1. Before running the prune command, make sure that the Lighthouse beacon node is not running. If you are using systemd, you might stop the Lighthouse beacon node with a command like:
+     - sudo systemctl stop lighthousebn
+2. Use the prune-states command to prune the historic states. You can do a test run without the --confirm flag to check that the database can be pruned:
+     - sudo -u "steven" lighthouse db prune-states --datadir "/home/steven/.lighthouse/mainnet/" --network "mainnet"
+3. If you are ready to prune the states irreversibly, add the --confirm flag to commit the changes:
+    - sudo -u "steven" lighthouse db prune-states --confirm --datadir "/home/steven/.lighthouse/mainnet/" --network "mainnet"
+4. After successfully pruning the historic states, you can restart the Lighthouse beacon node
+    - sudo systemctl start lighthousebn
+geth:
+For a normal Geth node, Geth should be stopped and the following command executed to start an offline state prune:
+  - geth snapshot prune-state
+For a Geth node run using systemd:
+    ```
+    sudo systemctl stop geth # stop geth, wait >3mins to ensure clean shutdown
+    tmux # tmux enables pruning to keep running even if you disconnect
+    sudo -u <user> geth --datadir <path> snapshot prune-state # wait for pruning to finish
+    sudo systemctl start geth # restart geth
+    ```
 ### Servers and APIs opened on the nodes:
   1. Interacting with the nodes Servers and API
       - A Lighthouse beacon node can be configured to expose an HTTP server by supplying the --http flag. The default listen address is http://127.0.0.1:5052

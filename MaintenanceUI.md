@@ -17,7 +17,7 @@ For a Geth node run using systemd:
     ```
     sudo systemctl stop geth # stop geth, wait >3mins to ensure clean shutdown
     tmux # tmux enables pruning to keep running even if you disconnect
-    sudo -u <user> geth --datadir <path> snapshot prune-state # wait for pruning to finish
+    sudo -u <user> geth --datadir /home/steven/.ethereum/geth snapshot prune-state # wait for pruning to finish
     sudo systemctl start geth # restart geth
     ```
 ### Servers and APIs opened on the nodes:

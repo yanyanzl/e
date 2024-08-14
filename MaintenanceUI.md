@@ -1,4 +1,24 @@
 # Maintenance and UI
+### upgrade
+lighthouse:
+sudo systemctl stop lighthousebn
+
+Go to the Releases page and select the latest release. https://github.com/sigp/lighthouse/releases
+
+Download the lighthouse-${VERSION}-x86_64-unknown-linux-gnu.tar.gz binary. For example, to obtain the binary file for v4.0.1 (the latest version at the time of writing), a user can run the following commands in a linux terminal:
+cd ~
+curl -LO https://github.com/sigp/lighthouse/releases/download/v4.0.1/lighthouse-v4.0.1-x86_64-unknown-linux-gnu.tar.gz
+tar -xvf lighthouse-v4.0.1-x86_64-unknown-linux-gnu.tar.gz
+
+Test the binary with ./lighthouse --version (it should print the version).
+(Optional) Move the lighthouse binary to a location in your PATH, so the lighthouse command can be called from anywhere. For example, to copy lighthouse from the current directory to usr/bin, run sudo cp lighthouse /usr/bin.
+
+geth:
+pdating an existing Geth installation to the latest version can be achieved by stopping the node and running the following commands:
+sudo systemctl stop geth
+sudo apt-get update
+sudo apt-get install ethereum
+sudo apt-get upgrade geth
 
 ### pruning
 lighthouse:
